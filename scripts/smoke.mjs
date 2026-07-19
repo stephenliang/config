@@ -25,6 +25,23 @@ const PER_TARGET_KEYS = new Set([
 /** @type {Array<[string, () => Promise<void>]>} */
 const checks = [
   [
+    'root deps and devDeps all use the catalog',
+    async () => {
+      const manifest = JSON.parse(
+        await readFile(new URL('../package.json', import.meta.url), 'utf8'),
+      );
+      for (const field of ['dependencies', 'devDependencies']) {
+        for (const [name, spec] of Object.entries(manifest[field])) {
+          assert.ok(
+            spec.startsWith('catalog:'),
+            `${field}.${name} is "${spec}" — pnpm update is known to inline ` +
+              'catalog: refs; restore the catalog reference',
+          );
+        }
+      }
+    },
+  ],
+  [
     'eslint/node',
     async () => {
       const { node } = await import('../eslint/node.js');
