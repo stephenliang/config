@@ -9,7 +9,7 @@ import { externalizeDeps } from 'vite-plugin-externalize-deps';
  *
  * @param {{ entry?: string[], formats?: ('es' | 'cjs')[] }} [options]
  */
-export function libConfig({ entry = ['src/index.ts'], formats = ['es'] } = {}) {
+export function lib({ entry = ['src/index.ts'], formats = ['es'] } = {}) {
   return defineConfig({
     plugins: [
       dts({

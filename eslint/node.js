@@ -3,15 +3,13 @@ import globals from 'globals';
 import { base } from './base.js';
 
 /**
- * Node.js packages.
+ * Node.js packages. Consumers extend via array spread:
+ * `export default [...node(import.meta.dirname), overrides]`.
  *
  * @param {string} tsconfigRootDir usually `import.meta.dirname`
- * @param {...import('typescript-eslint').ConfigArray[number]} extra
  */
-export function node(tsconfigRootDir, ...extra) {
-  return base(
-    tsconfigRootDir,
+export function node(tsconfigRootDir) {
+  return base(tsconfigRootDir, [
     { languageOptions: { globals: { ...globals.node } } },
-    ...extra,
-  );
+  ]);
 }

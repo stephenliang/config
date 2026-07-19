@@ -1,0 +1,14 @@
+{
+  "name": "fixture",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "prettier": "@stephenliang/tooling/prettier",
+  "devDependencies": {
+    "@stephenliang/tooling": "file:../..",
+    "@types/node": "^26",
+    "eslint": "^10",
+    "prettier": "^3.9",
+    "typescript": "^6"
+  }
+}

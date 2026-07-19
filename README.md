@@ -1,4 +1,4 @@
-# @stephenliang/toolkit
+# @stephenliang/tooling
 
 Shared tooling configs for personal pnpm/turborepo monorepos. One package,
 subpath exports, published to GitHub Packages.
@@ -28,12 +28,32 @@ In GitHub Actions the built-in token works:
 ```
 
 ```sh
-pnpm add -D @stephenliang/toolkit @types/node eslint prettier typescript
+pnpm add -D @stephenliang/tooling @types/node eslint prettier typescript
 ```
 
 `@types/node` is required by `typescript/node`: TypeScript 6 no longer
 auto-includes `node_modules/@types`, so the config declares
 `"types": ["node"]` explicitly.
+
+## Composition contract
+
+Each config family composes differently — know which pattern applies before
+extending one:
+
+- **ESLint** — call the factory, spread the result into your own array:
+  `export default [...node(import.meta.dirname), overrides]`.
+- **Vitest** — the export is a `defineConfig` object; extend it with
+  `mergeConfig`, not spreading.
+- **Everything else** (prettier, lint-staged, vite/lib) — plain objects or
+  arrays you spread/override directly.
+
+## Dependency policy
+
+Plugins used by layers every consuming repo pulls in (`eslint/node`,
+prettier, lint-staged) are hard `dependencies` of this package, so they
+install automatically. Opt-in layers that not every repo needs — `eslint/react`,
+`vitest/react`, `vite/lib` and their plugins — are optional
+`peerDependencies`: declare them yourself only if you use those layers.
 
 ## Usage
 
@@ -41,48 +61,54 @@ auto-includes `node_modules/@types`, so the config declares
 
 ```js
 // eslint.config.js
-import { node } from '@stephenliang/toolkit/eslint/node';
+import { node } from '@stephenliang/tooling/eslint/node';
 
-export default node(import.meta.dirname);
+export default [...node(import.meta.dirname)];
 ```
 
-Layers: `eslint/base`, `eslint/node`, `eslint/react` (needs the optional
-peers `eslint-plugin-react` + `eslint-plugin-jsx-a11y`). Each factory takes
-extra flat-config objects after the root dir. Test-file rules:
+Layers: `eslint/node`, `eslint/react` (needs the optional peers
+`eslint-plugin-react` + `eslint-plugin-jsx-a11y`). Each factory takes exactly
+the consumer's root directory; extend the result by spreading it alongside
+your own entries. Test-file rules are a separate default-exported array to
+spread in:
 
 ```js
-import { node } from '@stephenliang/toolkit/eslint/node';
-import { vitestTests } from '@stephenliang/toolkit/eslint/vitest';
+import { node } from '@stephenliang/tooling/eslint/node';
+import vitestRules from '@stephenliang/tooling/eslint/vitest';
 
-export default node(import.meta.dirname, ...vitestTests);
+export default [...node(import.meta.dirname), ...vitestRules];
 ```
 
 ### Prettier
 
 ```jsonc
 // package.json
-{ "prettier": "@stephenliang/toolkit/prettier" }
+{ "prettier": "@stephenliang/tooling/prettier" }
 ```
 
 ### TypeScript
 
 ```jsonc
 // tsconfig.json — node packages
-{ "extends": "@stephenliang/toolkit/typescript/node" }
+{ "extends": "@stephenliang/tooling/typescript/node" }
 
 // tsconfig.json — vite react apps
-{ "extends": "@stephenliang/toolkit/typescript/vite-react" }
+{ "extends": "@stephenliang/tooling/typescript/vite-react" }
 ```
 
 ### lint-staged
 
+Keys are granular so a consumer repo can delete exactly the key it handles
+differently. For example, this homelab repo lints YAML with `ansible-lint`
+instead of prettier, so it drops that key:
+
 ```js
 // lint-staged.config.mjs
-import base from '@stephenliang/toolkit/lint-staged';
+import base from '@stephenliang/tooling/lint-staged';
 
 export default {
   ...base,
-  // repo-specific entries here
+  '*.{yaml,yml}': ['ansible-lint'], // override, not prettier
 };
 ```
 
@@ -91,7 +117,7 @@ export default {
 ```ts
 // vitest.config.ts
 import { mergeConfig } from 'vitest/config';
-import base from '@stephenliang/toolkit/vitest/react';
+import base from '@stephenliang/tooling/vitest/react';
 
 export default mergeConfig(base, { test: { setupFiles: ['./setup.ts'] } });
 ```
@@ -103,9 +129,9 @@ Needs the optional peers `vite`, `vite-plugin-dts`,
 
 ```ts
 // vite.config.ts
-import { libConfig } from '@stephenliang/toolkit/vite/lib';
+import { lib } from '@stephenliang/tooling/vite/lib';
 
-export default libConfig(); // { entry, formats } overridable
+export default lib(); // { entry, formats } overridable
 ```
 
 ## Turborepo reference

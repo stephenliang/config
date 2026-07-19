@@ -1,20 +1,20 @@
 {
-  "name": "@stephenliang/toolkit",
+  "name": "@stephenliang/tooling",
   "version": "0.1.0",
   "description": "Shared tooling configs (eslint, prettier, tsconfig, lint-staged, vitest, vite) for personal repos",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stephenliang/toolkit.git"
+    "url": "git+https://github.com/stephenliang/tooling.git"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
-    "./eslint/base": "./eslint/base.js",
     "./eslint/node": "./eslint/node.js",
     "./eslint/react": "./eslint/react.js",
     "./eslint/vitest": "./eslint/vitest.js",
     "./prettier": "./prettier/index.js",
-    "./typescript/*": "./typescript/*.json",
+    "./typescript/node": "./typescript/node.json",
+    "./typescript/vite-react": "./typescript/vite-react.json",
     "./lint-staged": "./lint-staged/index.js",
     "./vitest/react": "./vitest/react.js",
     "./vite/lib": "./vite/lib.js"
@@ -30,7 +30,9 @@
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node scripts/smoke.mjs"
+    "test": "node scripts/smoke.mjs",
+    "test:fixture": "cd test/fixture && pnpm install && pnpm exec tsc -p tsconfig.json && pnpm exec eslint src/ && pnpm exec prettier --check .",
+    "typecheck": "tsc"
   },
   "prettier": "./prettier/index.js",
   "dependencies": {
@@ -43,6 +45,7 @@
     "typescript-eslint": "^8.0.0"
   },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^10.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",

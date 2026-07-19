@@ -1,10 +1,15 @@
 /**
- * Shared base; repos spread this and add repo-specific entries
- * (e.g. kubernetes manifest validation, ansible-lint).
+ * Shared base; repos spread this and add repo-specific entries. Keys are
+ * granular (rather than one glob for everything) so a consumer repo can
+ * delete exactly the key it handles differently — e.g. a repo that lints
+ * YAML with `ansible-lint` instead of prettier drops `'*.{yaml,yml}'`.
  *
- * @type {import('lint-staged').Configuration}
+ * @type {Record<string, string | string[]>}
  */
 export default {
-  '*.{ts,tsx}': ['prettier --write', 'eslint --fix'],
-  '*.{js,mjs,cjs,json,md,yaml,yml}': 'prettier --write',
+  '*.{ts,tsx}': ['eslint --fix', 'prettier --write'],
+  '*.{js,mjs,cjs}': 'prettier --write',
+  '*.json': 'prettier --write',
+  '*.md': 'prettier --write',
+  '*.{yaml,yml}': 'prettier --write',
 };

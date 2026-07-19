@@ -3,14 +3,15 @@ import importX from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
 
 /**
- * Type-checked base config. Every layer is a factory taking the consumer's
- * root directory so typescript-eslint's projectService resolves tsconfigs
- * relative to the consuming package, not this one.
+ * Type-checked base config. Not exported publicly — node.js/react.js use it
+ * internally to layer on their own config while staying single-arg
+ * factories. Consumers extend the public factories via array spread:
+ * `export default [...node(import.meta.dirname), overrides]`.
  *
  * @param {string} tsconfigRootDir usually `import.meta.dirname`
- * @param {...import('typescript-eslint').ConfigArray[number]} extra
+ * @param {import('typescript-eslint').ConfigArray} [extra]
  */
-export function base(tsconfigRootDir, ...extra) {
+export function base(tsconfigRootDir, extra = []) {
   return tseslint.config(
     {
       ignores: ['dist/**', 'bin/**', 'eslint.config.*'],
