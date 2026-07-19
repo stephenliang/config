@@ -1,4 +1,3 @@
-// @ts-expect-error no upstream type declarations for eslint-plugin-jsx-a11y
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
 import globals from 'globals';
