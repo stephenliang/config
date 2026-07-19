@@ -1,2 +1,30 @@
 allowBuilds:
   unrs-resolver: true
+
+catalogs:
+  linting:
+    '@eslint/js': ^10.0.1
+    '@types/eslint-plugin-jsx-a11y': ^6.10.1
+    '@vitest/eslint-plugin': ^1.6.23
+    eslint: ^10.7.0
+    eslint-import-resolver-typescript: ^4.4.5
+    eslint-plugin-import-x: ^4.17.1
+    eslint-plugin-jsx-a11y: ^6.10.2
+    eslint-plugin-react: ^7.37.5
+    globals: ^17.7.0
+    typescript-eslint: ^8.64.0
+  formatting:
+    prettier: ^3.9.5
+    prettier-plugin-packagejson: ^3.0.2
+  toolchain:
+    '@types/node': ^26.1.1
+    # typescript 7 (native) drops the JS Compiler API that typescript-eslint
+    # and vite-plugin-dts require; stay on 6.x until they support it
+    typescript: ^6.0.3
+  bundling:
+    '@vitejs/plugin-react': ^6.0.3
+    vite: ^8.1.5
+    vite-plugin-dts: ^5.0.3
+    vite-plugin-externalize-deps: ^0.10.0
+  testing:
+    vitest: ^4.1.10

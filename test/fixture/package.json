@@ -5,7 +5,7 @@
   "type": "module",
   "prettier": "@stephenliang/config/prettier",
   "devDependencies": {
-    "@stephenliang/config": "file:../..",
+    "@stephenliang/config": "file:./stephenliang-config.tgz",
     "@types/node": "^26",
     "eslint": "^10",
     "prettier": "^3.9",
