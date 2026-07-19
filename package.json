@@ -1,0 +1,105 @@
+{
+  "name": "@stephenliang/config",
+  "version": "0.1.0",
+  "description": "Shared tooling configs (eslint, prettier, tsconfig, lint-staged, vitest, vite) for personal repos",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephenliang/config.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./eslint/node": "./eslint/node.js",
+    "./eslint/react": "./eslint/react.js",
+    "./eslint/vitest": "./eslint/vitest.js",
+    "./prettier": "./prettier/index.js",
+    "./typescript/node": "./typescript/node.json",
+    "./typescript/vite-react": "./typescript/vite-react.json",
+    "./lint-staged": "./lint-staged/index.js",
+    "./vitest/react": "./vitest/react.js",
+    "./vite/lib": "./vite/lib.js"
+  },
+  "files": [
+    "eslint",
+    "prettier",
+    "typescript",
+    "lint-staged",
+    "vitest",
+    "vite"
+  ],
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node scripts/smoke.mjs",
+    "test:fixture": "pnpm pack --out test/fixture/stephenliang-config.tgz && cd test/fixture && pnpm install && pnpm exec tsc -p tsconfig.json && pnpm exec eslint src/ && pnpm exec prettier --check .",
+    "typecheck": "tsc"
+  },
+  "prettier": "./prettier/index.js",
+  "dependencies": {
+    "@eslint/js": "catalog:",
+    "@vitest/eslint-plugin": "catalog:",
+    "eslint-import-resolver-typescript": "catalog:",
+    "eslint-plugin-import-x": "catalog:",
+    "globals": "catalog:",
+    "prettier-plugin-packagejson": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "devDependencies": {
+    "@types/eslint-plugin-jsx-a11y": "catalog:",
+    "@types/node": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-jsx-a11y": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vite-plugin-externalize-deps": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@vitejs/plugin-react": ">=6",
+    "eslint": ">=10",
+    "eslint-plugin-jsx-a11y": ">=6",
+    "eslint-plugin-react": ">=7.37",
+    "prettier": ">=3",
+    "typescript": ">=5.9",
+    "vite": ">=7",
+    "vite-plugin-dts": ">=4",
+    "vite-plugin-externalize-deps": ">=0.9",
+    "vitest": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "@vitejs/plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-jsx-a11y": {
+      "optional": true
+    },
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "vite-plugin-dts": {
+      "optional": true
+    },
+    "vite-plugin-externalize-deps": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=24",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
