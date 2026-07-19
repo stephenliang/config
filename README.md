@@ -28,8 +28,12 @@ In GitHub Actions the built-in token works:
 ```
 
 ```sh
-pnpm add -D @stephenliang/toolkit eslint prettier typescript
+pnpm add -D @stephenliang/toolkit @types/node eslint prettier typescript
 ```
+
+`@types/node` is required by `typescript/node`: TypeScript 6 no longer
+auto-includes `node_modules/@types`, so the config declares
+`"types": ["node"]` explicitly.
 
 ## Usage
 
