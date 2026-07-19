@@ -44,8 +44,10 @@ extending one:
   `export default [...node(import.meta.dirname), overrides]`.
 - **Vitest** — the export is a `defineConfig` object; extend it with
   `mergeConfig`, not spreading.
-- **Everything else** (prettier, lint-staged, vite/lib) — plain objects or
-  arrays you spread/override directly.
+- **Vite** — `lib()` is a factory; pass options (`{ entry, formats }`) or
+  extend its result with `mergeConfig`.
+- **Everything else** (prettier, lint-staged) — plain objects you
+  spread/override directly.
 
 ## Dependency policy
 
