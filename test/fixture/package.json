@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "prettier": "@stephenliang/tooling/prettier",
+  "prettier": "@stephenliang/config/prettier",
   "devDependencies": {
-    "@stephenliang/tooling": "file:../..",
+    "@stephenliang/config": "file:../..",
     "@types/node": "^26",
     "eslint": "^10",
     "prettier": "^3.9",

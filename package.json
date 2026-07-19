@@ -1,10 +1,10 @@
 {
-  "name": "@stephenliang/tooling",
+  "name": "@stephenliang/config",
   "version": "0.1.0",
   "description": "Shared tooling configs (eslint, prettier, tsconfig, lint-staged, vitest, vite) for personal repos",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stephenliang/tooling.git"
+    "url": "git+https://github.com/stephenliang/config.git"
   },
   "license": "MIT",
   "type": "module",

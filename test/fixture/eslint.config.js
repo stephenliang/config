@@ -1,3 +1,3 @@
-import { node } from '@stephenliang/tooling/eslint/node';
+import { node } from '@stephenliang/config/eslint/node';
 
 export default [...node(import.meta.dirname)];

@@ -1,5 +1,5 @@
 {
-  "extends": "@stephenliang/tooling/typescript/node",
+  "extends": "@stephenliang/config/typescript/node",
   "compilerOptions": {
     "noEmit": true
   },

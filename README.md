@@ -1,4 +1,4 @@
-# @stephenliang/tooling
+# @stephenliang/config
 
 Shared tooling configs for personal pnpm/turborepo monorepos. One package,
 subpath exports, published to GitHub Packages.
@@ -28,7 +28,7 @@ In GitHub Actions the built-in token works:
 ```
 
 ```sh
-pnpm add -D @stephenliang/tooling @types/node eslint prettier typescript
+pnpm add -D @stephenliang/config @types/node eslint prettier typescript
 ```
 
 `@types/node` is required by `typescript/node`: TypeScript 6 no longer
@@ -63,7 +63,7 @@ install automatically. Opt-in layers that not every repo needs — `eslint/react
 
 ```js
 // eslint.config.js
-import { node } from '@stephenliang/tooling/eslint/node';
+import { node } from '@stephenliang/config/eslint/node';
 
 export default [...node(import.meta.dirname)];
 ```
@@ -75,8 +75,8 @@ your own entries. Test-file rules are a separate default-exported array to
 spread in:
 
 ```js
-import { node } from '@stephenliang/tooling/eslint/node';
-import vitestRules from '@stephenliang/tooling/eslint/vitest';
+import { node } from '@stephenliang/config/eslint/node';
+import vitestRules from '@stephenliang/config/eslint/vitest';
 
 export default [...node(import.meta.dirname), ...vitestRules];
 ```
@@ -85,17 +85,17 @@ export default [...node(import.meta.dirname), ...vitestRules];
 
 ```jsonc
 // package.json
-{ "prettier": "@stephenliang/tooling/prettier" }
+{ "prettier": "@stephenliang/config/prettier" }
 ```
 
 ### TypeScript
 
 ```jsonc
 // tsconfig.json — node packages
-{ "extends": "@stephenliang/tooling/typescript/node" }
+{ "extends": "@stephenliang/config/typescript/node" }
 
 // tsconfig.json — vite react apps
-{ "extends": "@stephenliang/tooling/typescript/vite-react" }
+{ "extends": "@stephenliang/config/typescript/vite-react" }
 ```
 
 ### lint-staged
@@ -106,7 +106,7 @@ instead of prettier, so it drops that key:
 
 ```js
 // lint-staged.config.mjs
-import base from '@stephenliang/tooling/lint-staged';
+import base from '@stephenliang/config/lint-staged';
 
 export default {
   ...base,
@@ -119,7 +119,7 @@ export default {
 ```ts
 // vitest.config.ts
 import { mergeConfig } from 'vitest/config';
-import base from '@stephenliang/tooling/vitest/react';
+import base from '@stephenliang/config/vitest/react';
 
 export default mergeConfig(base, { test: { setupFiles: ['./setup.ts'] } });
 ```
@@ -131,7 +131,7 @@ Needs the optional peers `vite`, `vite-plugin-dts`,
 
 ```ts
 // vite.config.ts
-import { lib } from '@stephenliang/tooling/vite/lib';
+import { lib } from '@stephenliang/config/vite/lib';
 
 export default lib(); // { entry, formats } overridable
 ```
