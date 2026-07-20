@@ -32,6 +32,9 @@ jobs:
       - name: Smoke-test exports
         run: pnpm test
 
+      - name: Test consumer fixture
+        run: pnpm run test:fixture
+
       - name: Check tag matches package version
         run: |
           version="$(node -p "require('./package.json').version")"
