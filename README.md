@@ -42,8 +42,8 @@ extending one:
 
 - **ESLint** — call the factory, spread the result into your own array:
   `export default [...node(import.meta.dirname), overrides]`.
-- **Vitest** — the export is a `defineConfig` object; extend it with
-  `mergeConfig`, not spreading.
+- **Vitest** — `react()` is a factory; extend its result with `mergeConfig`,
+  not spreading.
 - **Vite** — `lib()` is a factory; pass options (`{ entry, formats }`) or
   extend its result with `mergeConfig`.
 - **Everything else** (prettier, lint-staged) — plain objects you
@@ -119,9 +119,9 @@ export default {
 ```ts
 // vitest.config.ts
 import { mergeConfig } from 'vitest/config';
-import base from '@stephenliang/config/vitest/react';
+import { react } from '@stephenliang/config/vitest/react';
 
-export default mergeConfig(base, { test: { setupFiles: ['./setup.ts'] } });
+export default mergeConfig(react(), { test: { setupFiles: ['./setup.ts'] } });
 ```
 
 ### Vite library mode

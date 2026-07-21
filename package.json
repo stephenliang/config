@@ -1,6 +1,6 @@
 {
   "name": "@stephenliang/config",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared tooling configs (eslint, prettier, tsconfig, lint-staged, vitest, vite) for personal repos",
   "repository": {
     "type": "git",

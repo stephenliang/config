@@ -79,9 +79,15 @@ const checks = [
   [
     'vitest/react',
     async () => {
-      const { default: config } = await import('../vitest/react.js');
+      const { react } = await import('../vitest/react.js');
+      const config = react();
       assert.ok(config.test);
       assert.equal(config.test.environment, 'jsdom');
+      assert.notEqual(
+        react().plugins,
+        config.plugins,
+        'factory must not share plugin instances',
+      );
     },
   ],
   [
